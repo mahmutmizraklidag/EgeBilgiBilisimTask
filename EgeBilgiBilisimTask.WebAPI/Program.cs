@@ -16,6 +16,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DatabaseContext>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped(typeof(IBrandRepository), typeof(BrandRepository));
+builder.Services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

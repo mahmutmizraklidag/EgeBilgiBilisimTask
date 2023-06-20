@@ -1,10 +1,14 @@
 ﻿using EgeBilgiBilisimTask.Entities;
-using EgeBilgiBilisimTask.Service.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace EgeBilgiBilisimTask.Service.Repositories
 {
     public interface ICategoryRepository : IRepository<Category>
     {
-        Task<Category> KategoriyiUrunleriyleGetir(int categoryId);
+        Task<Category> GetCategoryByProduct(int categoryId);
     }
 }

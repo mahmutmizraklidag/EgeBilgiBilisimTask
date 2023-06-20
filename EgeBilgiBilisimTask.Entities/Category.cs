@@ -28,7 +28,7 @@ namespace EgeBilgiBilisimTask.Entities
         [Display(Name = "Eklenme Tarihi"), ScaffoldColumn(false)]
         public DateTime? CreateDate { get; set; } = DateTime.Now;
         public virtual ICollection<Product> Products { get; set; } 
-        public Category() //liste null olduğu zaman null referans hatası almamak için bu işlemi yaptım.
+        public Category() 
         {
             Products = new List<Product>();
         }

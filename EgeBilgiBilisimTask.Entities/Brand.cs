@@ -21,7 +21,7 @@ namespace EgeBilgiBilisimTask.Entities
         public bool IsActive { get; set; }
         [Display(Name = "Eklenme Tarihi"), ScaffoldColumn(false)]
         public DateTime? CreateDate { get; set; } = DateTime.Now;
-        public virtual ICollection<Product> Products { get; set; } //Brand ile Product arasında 1 e çok ilişki kurduk.
+        public virtual ICollection<Product> Products { get; set; } 
 
         public Brand()
         {

@@ -10,9 +10,9 @@ namespace EgeBilgiBilisimTask.WebAPI.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IRepository<Product> _repository;
+        private readonly IProductRepository _repository;
 
-        public ProductsController(IRepository<Product> repository)
+        public ProductsController(IProductRepository repository)
         {
             _repository = repository;
         }
@@ -21,7 +21,7 @@ namespace EgeBilgiBilisimTask.WebAPI.Controllers
         [HttpGet]
         public async Task<IEnumerable<Product>> GetAsync()
         {
-            return await _repository.GetAllAsync();
+            return await _repository.GetProductsByCategoryAndBrand();
         }
 
         // GET api/<ProductsController>/5
@@ -31,6 +31,14 @@ namespace EgeBilgiBilisimTask.WebAPI.Controllers
             var data = await _repository.FindAsync(id);
             if (data is null) return NotFound();
 
+            return data;
+        }
+
+        [HttpGet("GetGetProductByCategoryAndBrand/{id}")]
+        public async Task<ActionResult<Product>> GetGetProductByCategoryAndBrand(int id)
+        {
+            var data = await _repository.GetProductByCategoryAndBrand(id);
+            if (data is null) return NotFound();
             return data;
         }
 

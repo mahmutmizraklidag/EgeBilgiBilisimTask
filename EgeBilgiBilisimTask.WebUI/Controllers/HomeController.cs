@@ -1,4 +1,5 @@
-﻿using EgeBilgiBilisimTask.WebUI.Models;
+﻿using EgeBilgiBilisimTask.Entities;
+using EgeBilgiBilisimTask.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,27 +7,60 @@ namespace EgeBilgiBilisimTask.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly HttpClient _httpClient;
+        private readonly string _apiAdressContact;
+        private readonly string _apiAdressSlider;
+        private readonly string _apiAdressBrand;
+        private readonly string _apiAdressNews;
+        private readonly string _apiAdressProduct;
+        public HomeController(HttpClient httpClient)
         {
-            _logger = logger;
+            _httpClient = httpClient;
+            _apiAdressContact = "https://localhost:7246/api/Contacts";
+            _apiAdressSlider = "https://localhost:7246/api/Sliders";
+            _apiAdressBrand = "https://localhost:7246/api/Brands";
+            _apiAdressNews = "https://localhost:7246/api/News";
+            _apiAdressProduct = "https://localhost:7246/api/Products";
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
+        {
+            var model = new HomePageViewModel();
+            model.Sliders = await _httpClient.GetFromJsonAsync<List<Slider>>(_apiAdressSlider);
+            model.Brands = await _httpClient.GetFromJsonAsync<List<Brand>>(_apiAdressBrand);
+            model.Products = await _httpClient.GetFromJsonAsync<List<Product>>(_apiAdressProduct);
+            model.News = await _httpClient.GetFromJsonAsync<List<News>>(_apiAdressNews);
+
+            return View(model);
+        }
+        public IActionResult ContactUs()
         {
             return View();
         }
-
-        public IActionResult Privacy()
+        [HttpPost]
+        public async Task<IActionResult> ContactUs(Contact entity)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var response = await _httpClient.PostAsJsonAsync(_apiAdressContact, entity);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        TempData["mesaj"] = "<div class='alert alert-success'>Mesajınız Gönderildi... Teşekkürler...</div>";
+                        return RedirectToAction(nameof(ContactUs));
+                    }
+
+                    else ModelState.AddModelError("", "Kayıt Başarısız!");
+                }
+                catch
+                {
+                    ModelState.AddModelError("", "Hata Oluştu!");
+                }
+            }
+            return View(entity);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        
     }
 }

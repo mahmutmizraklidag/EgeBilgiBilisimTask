@@ -10,9 +10,9 @@ namespace EgeBilgiBilisimTask.Service.Repositories
         {
         }
 
-        public async Task<Category> KategoriyiUrunleriyleGetir(int categoryId)
+        public async Task<Category> GetCategoryByProduct(int categoryId)
         {
-            return await _databaseContext.Categories.Include(c => c.Products).FirstOrDefaultAsync(c=>c.Id==categoryId);
+           return await _databaseContext.Categories.Include(c=>c.Products).FirstOrDefaultAsync(c=>c.Id== categoryId);
         }
     }
 }
