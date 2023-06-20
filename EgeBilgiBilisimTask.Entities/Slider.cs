@@ -2,7 +2,7 @@
 
 namespace EgeBilgiBilisimTask.Entities
 {
-    public class Slider
+    public class Slider : IEntity
     {
         public int Id { get; set; }
         [Display(Name = "Resim")]

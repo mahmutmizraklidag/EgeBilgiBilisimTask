@@ -2,6 +2,7 @@
 using EgeBilgiBilisimTask.Service.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
+
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EgeBilgiBilisimTask.WebAPI.Controllers
@@ -16,6 +17,7 @@ namespace EgeBilgiBilisimTask.WebAPI.Controllers
         {
             _repository = repository;
         }
+
         // GET: api/<SlidersController>
         [HttpGet]
         public async Task<IEnumerable<Slider>> GetAsync()
