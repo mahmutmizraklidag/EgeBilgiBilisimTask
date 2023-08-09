@@ -9,11 +9,13 @@ namespace EgeBilgiBilisimTask.WebUI.Areas.Admin.Controllers
     public class SlidersController : Controller
     {
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
         private readonly string _apiAdress;
-        public SlidersController(HttpClient httpClient)
+        public SlidersController(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _apiAdress = "https://localhost:7246/api/Sliders";
+            _configuration = configuration;
+            _apiAdress = $"{_configuration.GetSection("EgeBilgiBilisim")["baseUrlApi"]}/api/Sliders";
         }
         // GET: SlideersController
         public async Task<ActionResult> Index()

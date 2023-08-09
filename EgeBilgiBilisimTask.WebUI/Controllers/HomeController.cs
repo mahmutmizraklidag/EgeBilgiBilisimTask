@@ -8,19 +8,21 @@ namespace EgeBilgiBilisimTask.WebUI.Controllers
     public class HomeController : Controller
     {
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
         private readonly string _apiAdressContact;
         private readonly string _apiAdressSlider;
         private readonly string _apiAdressBrand;
         private readonly string _apiAdressNews;
         private readonly string _apiAdressProduct;
-        public HomeController(HttpClient httpClient)
+        public HomeController(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _apiAdressContact = "https://localhost:7246/api/Contacts";
-            _apiAdressSlider = "https://localhost:7246/api/Sliders";
-            _apiAdressBrand = "https://localhost:7246/api/Brands";
-            _apiAdressNews = "https://localhost:7246/api/News";
-            _apiAdressProduct = "https://localhost:7246/api/Products";
+            _configuration = configuration;
+            _apiAdressContact = $"{_configuration.GetSection("EgeBilgiBilisim")["baseUrlApi"]}/api/Contacts";
+            _apiAdressSlider = $"{_configuration.GetSection("EgeBilgiBilisim")["baseUrlApi"]}/api/Sliders";
+            _apiAdressBrand = $"{_configuration.GetSection("EgeBilgiBilisim")["baseUrlApi"]}/api/Brands";
+            _apiAdressNews = $"{_configuration.GetSection("EgeBilgiBilisim")["baseUrlApi"]}/api/News";
+            _apiAdressProduct = $"{_configuration.GetSection("EgeBilgiBilisim")["baseUrlApi"]}/api/Products";
         }
 
         public async Task<IActionResult> Index()

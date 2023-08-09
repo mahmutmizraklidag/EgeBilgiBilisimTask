@@ -6,11 +6,13 @@ namespace EgeBilgiBilisimTask.WebUI.Controllers
     public class ProductsController : Controller
     {
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
         private readonly string _apiAdressProduct;
-        public ProductsController(HttpClient httpClient)
+        public ProductsController(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _apiAdressProduct = "https://localhost:7231/api/Products";
+            _configuration = configuration;
+            _apiAdressProduct = $"{_configuration.GetSection("EgeBilgiBilisim")["baseUrlApi"]}/api/Products";
         }
         public IActionResult Index()
         {

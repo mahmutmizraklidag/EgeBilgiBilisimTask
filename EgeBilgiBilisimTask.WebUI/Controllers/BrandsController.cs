@@ -6,12 +6,14 @@ namespace EgeBilgiBilisimTask.WebUI.Controllers
     public class BrandsController : Controller
     {
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
         private readonly string _apiAdressBrand;
 
-        public BrandsController(HttpClient httpClient)
+        public BrandsController(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _apiAdressBrand = "https://localhost:7246/api/Brands";
+            _configuration = configuration;
+            _apiAdressBrand = $"{_configuration.GetSection("EgeBilgiBilisim")["baseUrlApi"]}/api/Brands";
         }
         public async Task<IActionResult> IndexAsync()
         {

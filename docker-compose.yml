@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+  egebilgibilisimtask.webui:
+    image: egebilgibilisimtaskwebui-image
+    container_name: egebilgibilisimtaskwebui-container
+    build:
+      context: .
+      dockerfile: EgeBilgiBilisimTask.WebUI/Dockerfile
+  egebilgibilisimtask.webapi:
+    image: egebilgibilisimtaskwebapi-image
+    container_name: egebilgibilisimtaskwebapi-container
+    build:
+      context: .
+      dockerfile: EgeBilgiBilisimTask.WebAPI/Dockerfile
+volumes:
+  sqlser_volume:

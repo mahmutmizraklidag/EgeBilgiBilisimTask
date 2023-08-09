@@ -1,5 +1,6 @@
 using EgeBilgiBilisimTask.Data;
 using EgeBilgiBilisimTask.Service.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,10 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient(); //api kullanýlacaksa bunu servis olarak eklemeliyiz.
 
-builder.Services.AddDbContext<DatabaseContext>();
+builder.Services.AddDbContext<DatabaseContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
+});
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
@@ -19,12 +23,11 @@ builder.Services.AddScoped(typeof(IProductRepository), typeof(ProductRepository)
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
+
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
-}
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

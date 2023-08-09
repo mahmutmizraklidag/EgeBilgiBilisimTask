@@ -6,12 +6,14 @@ namespace EgeBilgiBilisimTask.WebUI.Controllers
     public class NewsController : Controller
     {
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
         private readonly string _apiAdressNews;
 
-        public NewsController(HttpClient httpClient)
+        public NewsController(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _apiAdressNews = "https://localhost:7246/api/News";
+            _configuration = configuration;
+            _apiAdressNews = $"{_configuration.GetSection("EgeBilgiBilisim")["baseUrlApi"]}/api/News";
         }
         public async Task<IActionResult> IndexAsync()
         {

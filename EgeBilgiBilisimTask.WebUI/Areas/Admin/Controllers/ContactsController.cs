@@ -8,11 +8,13 @@ namespace EgeBilgiBilisimTask.WebUI.Areas.Admin.Controllers
     public class ContactsController : Controller
     {
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
         private readonly string _apiAdress;
-        public ContactsController(HttpClient httpClient)
+        public ContactsController(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _apiAdress = "https://localhost:7246/api/Contacts";
+            _configuration = configuration;
+            _apiAdress = $"{_configuration.GetSection("EgeBilgiBilisim")["baseUrlApi"]}/api/Contacts";
         }
         // GET: ContactsController
         public async Task<ActionResult> Index()

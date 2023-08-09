@@ -2,6 +2,7 @@
 using EgeBilgiBilisimTask.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Configuration;
 
 namespace EgeBilgiBilisimTask.WebUI.Areas.Admin.Controllers
 {
@@ -9,12 +10,14 @@ namespace EgeBilgiBilisimTask.WebUI.Areas.Admin.Controllers
     public class BrandsController : Controller
     {
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
         private readonly string _apiAdress;
 
-        public BrandsController(HttpClient httpClient)
+        public BrandsController(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _apiAdress = "https://localhost:7246/api/Brands";
+            _configuration = configuration;
+            _apiAdress = $"{_configuration.GetSection("EgeBilgiBilisim")["baseUrlApi"]}/api/Brands";
         }
 
         // GET: BrandsController

@@ -9,15 +9,17 @@ namespace EgeBilgiBilisimTask.WebUI.Areas.Admin.Controllers
     public class ProductsController : Controller
     {
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
         private readonly string _apiAdress;
         private readonly string _apiAdressCategory;
         private readonly string _apiAdressBrand;
-        public ProductsController(HttpClient httpClient)
+        public ProductsController(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _apiAdress = "https://localhost:7246/api/Products";
-            _apiAdressCategory = "https://localhost:7246/api/Categories";
-            _apiAdressBrand = "https://localhost:7246/api/Brands";
+            _configuration = configuration;
+            _apiAdress = $"{_configuration.GetSection("EgeBilgiBilisim")["baseUrlApi"]}/api/Products";
+            _apiAdressCategory = $"{_configuration.GetSection("EgeBilgiBilisim")["baseUrlApi"]}/api/Categories";
+            _apiAdressBrand = $"{_configuration.GetSection("EgeBilgiBilisim")["baseUrlApi"]}/api/Brands";
         }
         // GET: ProductsController
         public async Task<ActionResult> Index()

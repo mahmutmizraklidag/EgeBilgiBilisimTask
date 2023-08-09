@@ -10,11 +10,13 @@ namespace EgeBilgiBilisimTask.WebUI.Areas.Admin.Controllers
     public class CategoriesController : Controller
     {
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
         private readonly string _apiAdress;
-        public CategoriesController(HttpClient httpClient)
+        public CategoriesController(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _apiAdress = "https://localhost:7246/api/Categories";
+            _configuration = configuration;
+            _apiAdress = $"{_configuration.GetSection("EgeBilgiBilisim")["baseUrlApi"]}/api/Categories";
         }
         // GET: CategoriesController
         public async Task<ActionResult> Index()

@@ -7,11 +7,13 @@ namespace EgeBilgiBilisimTask.WebUI.ViewComponents
     public class Brands : ViewComponent
     {
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
         private readonly string _apiAdress;
-        public Brands(HttpClient httpClient)
+        public Brands(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _apiAdress = "https://localhost:7246/api/Brands";
+            _configuration = configuration;
+            _apiAdress = $"{_configuration.GetSection("EgeBilgiBilisim")["baseUrlApi"]}/api/Brands";
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
